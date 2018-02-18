@@ -1,0 +1,744 @@
+/*
+	developer: mohammadreza tarkhan
+	email: mrtarkhan@outlook.com
+	github: @mrtarkhan
+*/
+
+/* import font awesome */
+@fa_path: "../node_modules/font-awesome/less";
+@import "@{fa_path}/variables.less";
+@import "@{fa_path}/mixins.less";
+@import "@{fa_path}/path.less";
+@import "@{fa_path}/core.less";
+@import "@{fa_path}/icons.less";
+
+// @font-face {
+// 	font-family: 'IRANSans-web';
+// 	src: url(../fonts/IRANSW.woff2) format('woff2'), url(./fonts/IRANSW.woff) format('woff');
+// }
+ 
+
+@font-face {
+	font-family: 'b koodak';
+	src: url('../fonts/BYekan.eot?#') format('eot'),  
+		 url('../fonts/BYekan.woff') format('woff'), 
+		 url('../fonts/BYekan.ttf') format('truetype'); 
+  }
+
+@font-face {
+	font-family: 'IranNastaliq';
+	src: 
+		url('../fonts/IranNastaliq.eot?#') format('eot'),
+		url('../fonts/IranNastaliq.ttf') format('truetype'),
+		url('../fonts/IranNastaliq.woff') format('woff');
+}
+
+/* LESS Variables */
+@headerHeight: 70px;
+@sidebarWidth: 270px;
+@headerBorder: 5px;
+@baseColor: #5eb6ff;
+@borderColor: #239cff;
+@backColor: #333;
+@headerColor:  #333;// #2A3F54;
+
+
+/* LESS Mixins */
+.BaseFont {
+	// font-family: 'IRANSans-web';
+	// font-size: 9pt;
+	font-family: 'b koodak';
+	font-size: 11pt;
+}
+
+
+* {
+	box-sizing: border-box;
+	direction: rtl;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	.BaseFont;
+	background-color: #d3d3d3;
+	overflow: hidden;
+}
+
+
+a {
+	color: @borderColor;
+	text-decoration: none;
+
+	&:hover {
+		color: #353535;
+	}
+}
+
+		
+ul {
+	list-style: none;
+}
+
+form {
+	input {
+		padding: 5px;
+		width: 100%;
+		box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2);
+	}
+}
+
+
+
+//reusable rules
+.generate-columns(12);
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+  .col-@{i} {
+    width: (@i * 100% / @n);
+  }
+  .generate-columns(@n, (@i + 1));
+}
+
+[class*="col-"] {
+    float: right;
+	padding: 10px;
+}
+
+.row {
+	&::after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+}
+
+.pull-left {
+	float:left;
+}
+
+.pull-right {
+	float:right;
+}
+
+.from-right {
+	text-align: right;
+}
+
+.from-left {
+	text-align: left;
+}
+
+.from-justify {
+	text-align: justify;
+}
+
+.from-center {
+	text-align: center;
+}
+
+/* header section */
+#header {
+	position: absolute;
+	width: 100%;
+	height: @headerHeight;
+	background-color: @headerColor;
+	border-bottom: @headerBorder solid @borderColor;
+	color: #ddd;
+	z-index: 99999;
+
+	.logo {
+		float: right;
+		height: @headerHeight;
+		width: @sidebarWidth - 40px;
+		font-weight: bold;
+		padding: 5px;
+		text-align: center;
+
+		span.text-logo {
+			font-family: 'iranNastaliq';
+			padding: 15px 15px 0 15px;
+			font-size: 2em;
+			margin: 0;
+			height: @headerHeight;
+			// box-shadow: 0px -8px 6px 0px rgba(0, 0, 0, 0.2);
+			text-shadow:5px 5px 10px black;
+			border-radius: 10px;
+		}
+		
+		span {
+			margin-right: 5px;
+			text-transform: uppercase;
+		}
+
+		img {
+			width: @sidebarWidth - 60px;
+			height: @headerHeight - 10;
+			vertical-align: middle;
+			padding: 3px;
+		}
+
+	}
+
+	#sidebar-toggle {
+		width: 30px;
+		height: @headerHeight / 2;
+		cursor: pointer;
+		margin-top: (@headerHeight / 4 - 3) + @headerBorder;
+		float: right;
+		
+		
+		.bar {
+			width: 25px;
+			height: 3px;
+			background-color: #ffffff;
+			margin: 4px 0;
+			transition: 0.4s;			
+		}
+
+		.toggle{
+			&:nth-child(1) {
+				 transform: rotate(45deg) translate(4px, 6px);
+				 background-color: @baseColor;
+			}
+			&:nth-child(2) {
+				opacity: 0;			
+			}
+			&:nth-child(3) {
+				transform: rotate(-45deg) translate(4px, -6px);
+				background-color: @baseColor;
+			}
+		}
+	}
+
+	.topnav-left {
+		position: relative;
+		float: left;
+		height: @headerHeight - 10;
+		width: 300px;
+		padding: 2px;
+		direction: ltr;
+
+
+		@media screen and (min-width: 200px) {
+			width: 100px;
+		}
+
+
+		@media screen and (min-width: 600px) {
+			width: 300px;
+		}
+
+		.profile {
+			display: inline-block;
+			height: @headerHeight - 10;
+			padding: 0 5px 3px 5px;
+			width: 65px;
+
+			img {
+				width: 55px;
+				height: 55px;
+				float: left;
+				border-radius: 3px;
+			}
+			&:hover .dropdown-profile {
+				display: block;
+			}
+		}
+
+		.info {
+			display: inline-block;
+			height: @headerHeight - 10;
+			padding: 2px 5px 3px;
+			text-align: left;
+			width: 220px;
+
+			.name, .time  {
+				width: 100%;
+				height: (@headerHeight / 2) - 5;
+				padding-top: 3px;
+				overflow: hidden;
+				text-align: left;
+				direction: ltr;
+				text-overflow: ellipsis;
+
+			}
+
+
+			@media screen and (min-width: 200px) {
+				display: none;
+			}
+
+			@media screen and (min-width: 600px) {
+				display: inline-block;
+			}
+
+		}
+
+	}
+
+	.topnav-center {
+		height: @headerHeight;
+		float: right;
+		color: #fff;
+		font-size: 1.8em;			
+		margin-right: 20px;
+		width: 200px;
+
+		@media screen and (min-width: 200px) {
+			margin-right: 60px;
+			width:100px;
+		}
+
+		@media screen and (min-width: 600px) {
+			margin-right: 20px;
+			width:200px;
+		}
+
+
+
+		div[class="icon"]  {
+			color: #fff;
+			border-left: 1px solid #444;
+			border-radius: 1px;
+			position: relative;
+			display: inline-block;
+
+			i {
+				width: 45px;
+				height: 45px;
+				text-align: center;
+				padding: (@headerHeight / 3.5) 5px 5px;
+
+
+				@media screen and (min-width: 200px) {
+					width: 35px;
+					height: 35px;
+				}
+
+				@media screen and (min-width: 600px) {
+					width: 55px;
+					height: 55px;
+				}
+
+			}
+
+			.tip-text {
+				position: absolute;
+				right: 10px;
+				bottom: @headerHeight / 3;
+				padding-top: @headerHeight / 12;
+				text-align: center;
+				font-size: @headerHeight / 8;
+				line-height: .9;
+				background-color: @baseColor;
+				width: @headerHeight / 3;
+				height: @headerHeight / 4;
+				border-radius: 10px;
+				color:#000;
+			}
+
+			&:hover .dropdown-content {
+				display: block;
+			}
+
+		}
+
+	}
+
+	.topnav-right {
+		background-color: @borderColor;
+		width: @sidebarWidth;
+		height: @headerHeight;
+		float: right;
+		
+		/* set element styles to fit tablet and higher(desktop) */
+		@media screen and (min-width: 200px) {
+			width: 0;
+			height: 0;
+		}
+
+
+		/* set element styles to fit tablet and higher(desktop) */
+		@media screen and (min-width: 600px) {
+			width: 70px;
+			height: @headerHeight;
+		}
+
+		/* set element styles for desktop */
+		@media screen and (min-width: 800px) {
+			width: @sidebarWidth;
+			height: @headerHeight;
+		}
+	}
+
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		width: 300px;
+		height: 300px;
+		overflow-y: auto;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		right: 0;
+		color: #000 !important;
+		font-size: 0.5em;
+
+		ul {
+			li {
+				position: relative;
+			}
+	
+			li.header {
+				border-top-left-radius: 4px;
+				border-top-right-radius: 4px;
+				border-bottom-right-radius: 0;
+				border-bottom-left-radius: 0;
+				padding: 7px 10px;
+				background-color: #eee;
+				color: #444444;
+				text-align: center;
+			}	
+			li.body {
+				&:nth-child(odd)
+				{
+					border-left:3px solid #41c40e;
+				}
+
+				&:nth-child(even) {
+					border-left:3px solid #c4b20e;
+				}
+				&:hover {
+					background-color: #f6f6f6;
+					border-left: none;
+				}
+			}
+			li.footer {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+				padding: 7px 10px;	
+				background-color: #eee;
+				color: #444444;
+				text-align: center;
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+			}
+		}
+
+		ul.notif {
+			li {
+				padding: 7px;
+				background-color: #f9f9f9;
+				&:hover {
+					background-color: #f6f6f6;
+					border-left: none;
+				}
+			}
+		}
+
+		.img-circle {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+		}
+
+		h4 {
+			margin: 5px 50px 0 0;
+			color: #444444;
+			font-size: 1em;
+
+			small {
+				color: #999999;
+				font-size: 0.8em;
+				top: 0;
+				left: 0;
+
+				i{
+					width: 10px !important;
+					height: 10px !important;
+					padding: 0 0 0 2px !important;
+					right: 0 !important;
+				}
+			}
+		}
+
+		p {
+			margin: 0 50px 0 0;
+			font-size: 0.9em;
+			color: #888888;
+		}
+
+
+	}
+
+
+	.dropdown-profile {
+		display: none;
+		position: relative;
+		background-color: #f9f9f9;
+		width: 300px;
+		height: 300px;
+		overflow-y: auto;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		right: 0;
+		color: #000 !important;
+		font-size: 1em;
+		float: left;
+
+		.img-circle {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+		}
+	}
+
+
+	
+
+	/* set element styles to fit tablet and higher(desktop) */
+	@media screen and (min-width: 200px) {
+		.logo {
+			display: none;
+		}
+		#sidebar-toggle {
+			margin-right: 20px;
+		}
+	}
+
+
+	/* set element styles to fit tablet and higher(desktop) */
+	@media screen and (min-width: 600px) {
+		.logo {
+			display: none;
+		}
+		#sidebar-toggle {
+			margin-right: 20px;
+		}
+	}
+
+	/* set element styles for desktop */
+	@media screen and (min-width: 800px) {
+		.logo {
+			display: block;
+		}
+		#sidebar-toggle {
+			margin-right: 5px;
+		}
+	}
+
+}
+
+
+/* sidebar section */
+#sidebar {
+	width: 100%;
+	height: 100%;
+	margin-top: @headerHeight;
+	padding: 3px;
+	float: right;
+	background-color: @backColor;
+	border-left: 5px solid @borderColor;
+	z-index: 99999;
+	transition: transform 0.8s;
+
+	.visible {
+		display: block;
+	}
+
+	ul {
+		text-decoration: none;
+		list-style: none;
+		
+		li {
+			padding: 8px 5px;
+			border-bottom: 1px solid #383838;
+			border-radius: 3px;
+			position: relative;
+
+			&:hover {
+				background-color: @borderColor;
+			}
+
+			a {
+				color: #fff;
+				display: block;
+				text-decoration: none;
+			}
+
+			i {
+				color: #ffffff;
+				min-width: 20px;
+				text-align: center;
+				font-size: 1.4em;
+			}
+
+			.textMenu {
+				font-size: 1em;
+				padding-right: 3px;
+			}
+		}
+	}
+
+
+
+	/* set element styles to fit tablet and higher(desktop) */
+	@media screen and (min-width: 200px) {
+		ul li a {
+			text-align: right;
+		}
+		ul li .textMenu {
+			display: inherit;
+		}
+	}
+
+
+	/* set element styles to fit tablet and higher(desktop) */
+	@media screen and (min-width: 600px) {
+		width: 70px;	
+		ul li a {
+			text-align: center;
+		}
+
+		ul li .textMenu {
+			display: none;
+		}
+	}
+
+	/* set element styles for desktop */
+	@media screen and (min-width: 800px) {
+		width: @sidebarWidth;
+		ul li a {
+			text-align: right;
+		}
+		ul li .textMenu {
+			display: inherit;
+		}
+	}
+
+}
+
+
+.toggle-sidebar {
+	transform: translate(@sidebarWidth);
+	transition: transform 0.8s;
+
+
+	/* set element styles to fit tablet and higher(desktop) */
+
+	@media screen and (max-width: 200px) {
+		transform: translate(200px);
+		transition: transform 1s;
+	}
+	@media screen and (max-width: 300px) {
+		transform: translate(300px);
+		transition: transform 1s;
+	}
+	@media screen and (max-width: 400px) {
+		transform: translate(400px);
+		transition: transform 1s;
+	}
+	@media screen and (max-width: 500px) {
+		transform: translate(500px);
+		transition: transform 1s;
+	}
+	@media screen and (max-width: 550px) {
+		transform: translate(550px);
+		transition: transform 1s;
+	}	
+	@media screen and (max-width: 600px) {
+		transform: translate(600px);
+		transition: transform 1s;
+	}
+
+	/* set element styles to fit tablet and higher(desktop) */
+	@media screen and (min-width: 600px) {	
+		transform: translate(70px);
+	}
+
+
+	/* set element styles to fit tablet and higher(desktop) */
+	@media screen and (min-width: 800px) {	
+		transform: translate(@sidebarWidth);
+	}
+
+}
+
+
+
+#base-container {
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	position: absolute;
+	z-index: -1;
+
+
+	#main-container {
+		height: 100%;
+		width: 100%;
+		padding-left: 10px;
+		padding-right: @sidebarWidth;
+		padding-top: @headerHeight;
+		position: relative;
+		transition: 0.8s all ease;
+
+		/* set element styles to fit tablet and higher(desktop) */
+		@media screen and (min-width: 200px) {
+			padding-right: 0;
+		}
+
+		/* set element styles to fit tablet and higher(desktop) */
+		@media screen and (min-width: 600px) {
+			padding-right: 70px;
+		}
+
+		/* set element styles for desktop */
+		@media screen and (min-width: 800px) {
+			padding-right: @sidebarWidth;
+		}
+
+
+	}
+
+	.container {
+		margin: 5px;
+		padding: 15px;
+		width: 100%;
+		box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+		background-color: #fff;
+		display: inline-block;
+	}
+}
+
+
+.toggle-main-container {
+	padding-right: 0 !important;
+	transform: scale(1);
+	transition: 0.8s all ease;
+}
+
+
+
+/* set element styles to fit tablet and higher(desktop) */
+@media screen and (min-width: 200px) {
+}
+
+/* set element styles to fit tablet and higher(desktop) */
+@media screen and (min-width: 600px) {
+}
+
+/* set element styles for desktop */
+@media screen and (min-width: 800px) {
+}
+
+
+/* main box container */
+.main {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+
