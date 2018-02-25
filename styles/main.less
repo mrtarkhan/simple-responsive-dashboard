@@ -29,6 +29,22 @@
     .generate-columns(@n, (@i + 1));
 }
 
+.dropdown-basic() {
+    display: none;
+    position: absolute;
+    background-color: #fefefe;
+    right: 0;
+    overflow-y: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    color: #000 !important;    
+    width: 200px;
+    height: 300px;
+    @media screen and (min-width: 600px) {
+        width: 300px;
+        height: 300px;
+    }
+}
+
 // fonts
 @font-face {
     font-family: 'IRANSans-web';
@@ -181,6 +197,7 @@ form {
             border-radius: 1px;
             position: relative;
             float: right;
+            cursor: pointer;
             i {
                 width: 55px;
                 height: 55px;
@@ -210,7 +227,6 @@ form {
         float: left;
         height: @headerHeight - 10;
         width: 100px;
-        padding: 2px;
         direction: ltr;
         @media screen and (min-width: 600px) {
             width: 300px;
@@ -220,10 +236,10 @@ form {
             height: @headerHeight - 10;
             padding: 0 5px 3px 5px;
             width: 65px;
+            cursor: pointer;
             img {
                 width: 55px;
                 height: 55px;
-                float: left;
                 border-radius: 3px;
             }
             &:hover .dropdown-profile {
@@ -253,15 +269,7 @@ form {
         }
     }
     .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #fefefe;
-        width: 300px;
-        height: 300px;
-        right: 0;
-        overflow-y: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        color: #000 !important;
+        .dropdown-basic();
         font-size: 0.5em;
         z-index: 40;
         ul {
@@ -343,29 +351,50 @@ form {
         }
     }
     .dropdown-profile {
-        display: none;
+        .dropdown-basic();
+        cursor: initial;
         position: relative;
-        background-color: #fefefe;
-        width: 300px;
-        height: 300px;
-        overflow-y: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        right: 0;
-        color: #000 !important;
         font-size: 1em;
         float: left;
         z-index: 40;
-        .img-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        padding: 5px;
+        span.img-circle {
+            text-align: center;
+            display: block;
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                margin-top: 20%;
+                float: initial;
+            }
+        }
+        .dropdown-profile-header {
+            background-color: @borderColor;
+            height: 40%;
+            width: 100%;
+        }
+        .dropdown-profile-control {
+            border: 2px solid @borderColor;
+            padding: 5px;
+            padding-top: 20%;
+            height: 100%;
+            ul {
+                li {
+                    padding: 4px;
+                    border-bottom: 1px solid #eee;
+                    &:hover {
+                        background-color: #eee;
+                    }
+                }
+            }
         }
     }
 }
 
 
-/* sidebar section */
 
+/* sidebar section */
 #sidebar {
     position: absolute;
     width: 100%;
@@ -376,18 +405,22 @@ form {
     transition: all ease 0.8s;
     z-index: 10;
     /* set element styles to fit tablet and higher(desktop) */
+
     @media screen and (min-width: 600px) {
         width: 70px;
         z-index: 20;
     }
     /* set element styles for desktop */
+
     @media screen and (min-width: 800px) {
         width: @sidebarWidth;
         margin-top: 0;
     }
+
     .visible {
         display: block;
     }
+
     .logo {
         display: none;
         height: @headerHeight;
@@ -406,6 +439,7 @@ form {
             display: block;
         }
     }
+
     ul {
         font-size: 1em;
         padding: 5px;
@@ -453,57 +487,63 @@ form {
         }
     }
 }
-
 .toggle-togglebar {
     /* set element styles to fit tablet and higher(desktop) */
+
     @media screen and (min-width: 600px) {
         margin-right: 0;
         transition: all ease 0.8s;
     }
     /* set element styles to fit tablet and higher(desktop) */
+
     @media screen and (min-width: 800px) {
         margin-right: -@sidebarWidth;
         transition: all ease 0.8s;
     }
 }
-
 .toggle-sidebar {
     @media screen and (max-width: 200px) {
         margin-right: -200px;
         transition: all ease 0.8s;
     }
+
     @media screen and (max-width: 300px) {
         margin-right: -300px;
         transition: all ease 0.8s;
     }
+
     @media screen and (max-width: 400px) {
         margin-right: -400px;
         transition: all ease 0.8s;
     }
+
     @media screen and (max-width: 500px) {
         margin-right: -500px;
         transition: all ease 0.8s;
     }
+
     @media screen and (max-width: 550px) {
         margin-right: -550px;
         transition: all ease 0.8s;
     }
+
     @media screen and (max-width: 600px) {
         margin-right: -600px;
         transition: all ease 0.8s;
     }
     /* set element styles to fit tablet and higher(desktop) */
+
     @media screen and (min-width: 600px) {
         margin-right: -@headerHeight;
         transition: all ease 0.8s;
     }
     /* set element styles to fit tablet and higher(desktop) */
+
     @media screen and (min-width: 800px) {
         margin-right: -@sidebarWidth;
         transition: all ease 0.8s;
     }
 }
-
 #main-container {
     padding: 30px;
     height: 100%;
@@ -512,15 +552,16 @@ form {
     transition: 0.8s all ease;
     overflow-y: scroll;
     /* set element styles to fit tablet and higher(desktop) */
+
     @media screen and (min-width: 600px) {
         margin-right: 70px;
     }
     /* set element styles for desktop */
+
     @media screen and (min-width: 800px) {
         margin-right: @sidebarWidth;
     }
 }
-
 .container {
     margin: 5px;
     padding: 15px;
@@ -529,40 +570,29 @@ form {
     background-color: #fff;
     display: inline-block;
 }
-
 .toggle-main-container {
     margin-right: 0 !important;
     transform: scale(1);
     transition: 0.8s all ease;
 }
 
-
 /* set element styles to fit tablet and higher(desktop) */
-
 @media screen and (min-width: 200px) {}
 
-
 /* set element styles to fit tablet and higher(desktop) */
-
 @media screen and (min-width: 600px) {}
 
-
 /* set element styles for desktop */
-
 @media screen and (min-width: 800px) {}
 
-
 /* main box container */
-
 .main {
     display: flex;
     flex-flow: row wrap;
 }
-
 //other css files
 
 /* import font awesome */
-
 @fa_path: "../node_modules/font-awesome/less";
 @import "@{fa_path}/variables.less";
 @import "@{fa_path}/mixins.less";
